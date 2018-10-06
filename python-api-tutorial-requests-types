@@ -1,7 +1,5 @@
 #!/bin/python3
 # https://www.dataquest.io/blog/python-api-tutorial/
-# Learn to interact with Python Requests and handle JSON responses for APIs
-# Formatted strings for Python 3.7
 
 import requests
 # This API will work with the OpenNotify API for the ISS in space
@@ -43,3 +41,19 @@ type_of_data = type(data)
 print(f"Type: {type_of_data}\nData: \n{data}\n\nResponse Headers: \n{response.headers}\n"
         + "The Response Headers tells us the format of the response (bytes/json/xml/string) so we can "
         + "interact with the data.")
+
+#----------------
+response = requests.get("http://api.open-notify.org/astros.json")
+data = response.json()
+
+print("\nGetting the response for 'number' via data[\"number\"]\n")
+print(data["number"])
+print("\nPrinting 'data'\n")
+print(data)
+
+# Sample astronaut response in JSON. Print each name on the ship from http://api.open-notify.org/astros.json
+
+# {"people": [{"name": "Sergey Prokopyev", "craft": "ISS"}, {"name": "Alexander Gerst", "craft": "ISS"}, {"name": "Serena Aunon-Chancellor", "craft": "ISS"}], "message": "success", "number": 3}
+
+for person in data['people']:
+        print("\n" + person['name'] + " is on the ISS right now")
