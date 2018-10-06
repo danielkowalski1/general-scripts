@@ -1,6 +1,6 @@
 [ec2-user@ip-172-27-200-157 ~]$ python3 open-notify.py
 200
-b'{\n  "message": "success", \n  "request": {\n    "altitude": 100, \n    "datetime": 1538848885, \n    "latitude": 32.984925, \n    "longitude": -96.9136, \n    "passes": 5\n  }, \n  "response": [\n    {\n      "duration": 604, \n      "risetime": 1538851756\n    }, \n    {\n      "duration": 609, \n      "risetime": 1538857540\n    }, \n    {\n      "duration": 397, \n      "risetime": 1538863495\n    }, \n    {\n      "duration": 245, \n      "risetime": 1538869469\n    }, \n    {\n      "duration": 473, \n      "risetime": 1538875242\n    }\n  ]\n}\n'
+b'{\n  "message": "success", \n  "request": {\n    "altitude": 100, \n    "datetime": 1538854944, \n    "latitude": 36.169941, \n    "longitude": -115.139832, \n    "passes": 5\n  }, \n  "response": [\n    {\n      "duration": 617, \n      "risetime": 1538857391\n    }, \n    {\n      "duration": 611, \n      "risetime": 1538863184\n    }, \n    {\n      "duration": 467, \n      "risetime": 1538869104\n    }, \n    {\n      "duration": 437, \n      "risetime": 1538875000\n    }, \n    {\n      "duration": 580, \n      "risetime": 1538880788\n    }\n  ]\n}\n'
 
 Second response from the API
 
@@ -11,16 +11,12 @@ Decoded bytes object response to utf-8
   "message": "success",
   "request": {
     "altitude": 100,
-    "datetime": 1538848885,
+    "datetime": 1538853899,
     "latitude": 32.984925,
     "longitude": -96.9136,
     "passes": 5
   },
   "response": [
-    {
-      "duration": 604,
-      "risetime": 1538851756
-    },
     {
       "duration": 609,
       "risetime": 1538857540
@@ -36,6 +32,10 @@ Decoded bytes object response to utf-8
     {
       "duration": 473,
       "risetime": 1538875242
+    },
+    {
+      "duration": 636,
+      "risetime": 1538880991
     }
   ]
 }
@@ -45,8 +45,22 @@ Trying Mom's Ellenton coordinates...
 Printing response.json()...
 Type: <class 'dict'>
 Data:
-{'message': 'success', 'request': {'altitude': 100, 'datetime': 1538847567, 'latitude': 27.519727, 'longitude': -82.538674, 'passes': 5}, 'response': [{'duration': 616, 'risetime': 1538851823}, {'duration': 286, 'risetime': 1538857830}, {'duration': 512, 'risetime': 1538875450}, {'duration': 637, 'risetime': 1538881193}, {'duration': 213, 'risetime': 1538887159}]}
+{'message': 'success', 'request': {'altitude': 100, 'datetime': 1538854945, 'latitude': 32.080608, 'longitude': -81.090103, 'passes': 5}, 'response': [{'duration': 455, 'risetime': 1538857800}, {'duration': 152, 'risetime': 1538863843}, {'duration': 346, 'risetime': 1538869650}, {'duration': 595, 'risetime': 1538875381}, {'duration': 613, 'risetime': 1538881162}]}
 
 Response Headers:
-{'Server': 'nginx/1.10.3', 'Date': 'Sat, 06 Oct 2018 18:01:25 GMT', 'Content-Type': 'application/json', 'Content-Length': '528', 'Connection': 'keep-alive', 'Via': '1.1 vegur'}
+{'Server': 'nginx/1.10.3', 'Date': 'Sat, 06 Oct 2018 19:45:20 GMT', 'Content-Type': 'application/json', 'Content-Length': '528', 'Connection': 'keep-alive', 'Via': '1.1 vegur'}
 The Response Headers tells us the format of the response (bytes/json/xml/string) so we can interact with the data.
+
+Getting the response for 'number' via data["number"]
+
+3
+
+Printing 'data'
+
+{'people': [{'name': 'Sergey Prokopyev', 'craft': 'ISS'}, {'name': 'Alexander Gerst', 'craft': 'ISS'}, {'name': 'Serena Aunon-Chancellor', 'craft': 'ISS'}], 'message': 'success', 'number': 3}
+
+Sergey Prokopyev is on the ISS right now
+
+Alexander Gerst is on the ISS right now
+
+Serena Aunon-Chancellor is on the ISS right now
