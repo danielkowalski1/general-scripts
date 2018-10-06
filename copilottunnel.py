@@ -15,7 +15,7 @@ open('/fileStores/CoPilot/ps.aux', 'w').write(subprocess.check_output(["ps","-au
 def _start():
 	if not os.path.isfile('/root/.ssh/known_hosts'):
 		open('/root/.ssh/known_hosts', 'a').write('');
-	if "dsms.trendmicro.com" not in open('/root/.ssh/known_hosts','r').read():
+	if "xXxXxXxX.com" not in open('/root/.ssh/known_hosts','r').read():
 		add_to_knownHosts = subprocess.Popen(["ssh", HOST, "2> /dev/null"], shell=False);
 		add_to_knownHosts.communicate();
 
