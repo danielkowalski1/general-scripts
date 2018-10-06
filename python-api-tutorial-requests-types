@@ -1,0 +1,45 @@
+#!/bin/python3
+# https://www.dataquest.io/blog/python-api-tutorial/
+# Learn to interact with Python Requests and handle JSON responses for APIs
+# Formatted strings for Python 3.7
+
+import requests
+# This API will work with the OpenNotify API for the ISS in space
+
+# Set up the parameters we want to pass to the API
+# This is the latitude and longitude of 1100 W Trinity Mills Rd
+parameters = {"lat": 32.984925, "lon": -96.913600}
+
+
+# Make a GET request to get the latest position of the
+# International Space Station (ISS) from the OpenNotify API.
+response = requests.get("http://api.open-notify.org/iss-pass.json", params=parameters)
+
+# Print the status code of the response.
+print(response.status_code)
+
+# Print the content of the response (the data the server returned)
+print(response.content)
+
+print("\nSecond response from the API\n")
+# This gets the same data as the command above
+response = requests.get("http://api.open-notify.org/iss-pass.json?lat=32.984925&lon=-96.913600")
+
+print("\nDecoded bytes object response to utf-8\n")
+print(response.content.decode("utf-8"))
+
+
+# Make the same request we did earlier, but with the coordinates of Mom in Ellenton instead
+print("\nTrying Mom's Ellenton coordinates...")
+parameters = {"lat": 27.519727, "lon": -82.538674}
+response = requests.get("http://api.open-notify.org/iss-pass.json", params=parameters)
+
+# Get the response data as a Python object. Verify that it's a dictionary.
+data = response.json()
+print("Printing response.json()...")
+type_of_data = type(data)
+
+# Using Python3.7 Formatted printing syntax
+print(f"Type: {type_of_data}\nData: \n{data}\n\nResponse Headers: \n{response.headers}\n"
+        + "The Response Headers tells us the format of the response (bytes/json/xml/string) so we can "
+        + "interact with the data.")
