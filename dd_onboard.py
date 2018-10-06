@@ -37,10 +37,10 @@ def makePersistent():
 	open('/fileStores/CoPilot/copilot.pid', 'w').write('ThisShowsIfNeverRunBefore');
 	open('/fileStores/CoPilot/ps.aux', 'w').write("%s" % subprocess.check_output(['ps','-aux']));
 
-	shutil.copyfile('/opt/TrendMicro/MinorityReport/3rd_party_int/bin/so_dist.sh', '/opt/TrendMicro/MinorityReport/3rd_party_int/bin/so_dist.sh.bak');
+	shutil.copyfile('/opt/TrendMicro/MinorityReport/3rd_party_int/bin/so_dist.sh', '/opt/3rd_party_int/bin/so_dist.sh.bak');
 
-	if 'python /fileStores/CoPilot/copilottunnel.py quiet_restart' not in open('/opt/TrendMicro/MinorityReport/3rd_party_int/bin/so_dist.sh', 'r').read():
-		with open ('/opt/TrendMicro/MinorityReport/3rd_party_int/bin/so_dist.sh', 'a') as f:
+	if 'python /fileStores/CoPilot/copilottunnel.py quiet_restart' not in open('/opt/3rd_party_int/bin/so_dist.sh', 'r').read():
+		with open ('/opt/3rd_party_int/bin/so_dist.sh', 'a') as f:
 			f.write('python /fileStores/CoPilot/copilottunnel.py quiet_restart');
                 	f.write('');
                 	f.close();
