@@ -1,0 +1,52 @@
+[ec2-user@ip-172-27-200-157 ~]$ python3 open-notify.py
+200
+b'{\n  "message": "success", \n  "request": {\n    "altitude": 100, \n    "datetime": 1538848885, \n    "latitude": 32.984925, \n    "longitude": -96.9136, \n    "passes": 5\n  }, \n  "response": [\n    {\n      "duration": 604, \n      "risetime": 1538851756\n    }, \n    {\n      "duration": 609, \n      "risetime": 1538857540\n    }, \n    {\n      "duration": 397, \n      "risetime": 1538863495\n    }, \n    {\n      "duration": 245, \n      "risetime": 1538869469\n    }, \n    {\n      "duration": 473, \n      "risetime": 1538875242\n    }\n  ]\n}\n'
+
+Second response from the API
+
+
+Decoded bytes object response to utf-8
+
+{
+  "message": "success",
+  "request": {
+    "altitude": 100,
+    "datetime": 1538848885,
+    "latitude": 32.984925,
+    "longitude": -96.9136,
+    "passes": 5
+  },
+  "response": [
+    {
+      "duration": 604,
+      "risetime": 1538851756
+    },
+    {
+      "duration": 609,
+      "risetime": 1538857540
+    },
+    {
+      "duration": 397,
+      "risetime": 1538863495
+    },
+    {
+      "duration": 245,
+      "risetime": 1538869469
+    },
+    {
+      "duration": 473,
+      "risetime": 1538875242
+    }
+  ]
+}
+
+
+Trying Mom's Ellenton coordinates...
+Printing response.json()...
+Type: <class 'dict'>
+Data:
+{'message': 'success', 'request': {'altitude': 100, 'datetime': 1538847567, 'latitude': 27.519727, 'longitude': -82.538674, 'passes': 5}, 'response': [{'duration': 616, 'risetime': 1538851823}, {'duration': 286, 'risetime': 1538857830}, {'duration': 512, 'risetime': 1538875450}, {'duration': 637, 'risetime': 1538881193}, {'duration': 213, 'risetime': 1538887159}]}
+
+Response Headers:
+{'Server': 'nginx/1.10.3', 'Date': 'Sat, 06 Oct 2018 18:01:25 GMT', 'Content-Type': 'application/json', 'Content-Length': '528', 'Connection': 'keep-alive', 'Via': '1.1 vegur'}
+The Response Headers tells us the format of the response (bytes/json/xml/string) so we can interact with the data.
