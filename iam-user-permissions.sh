@@ -1,8 +1,3 @@
-
-Daniel_Kowalski@trendmicro.com
-Sun, Sep 30, 1:27 PM (6 days ago)
-to me
-
 #!/bin/bash
 
 ###############################################################################
