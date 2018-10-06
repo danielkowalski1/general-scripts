@@ -1,0 +1,40 @@
+#!/bin/python3
+# https://www.dataquest.io/blog/python-api-tutorial/
+
+# Make a list of fast food chains.
+best_food_chains = ["Taco Bell", "Shake Shack", "Chipotle"]
+
+# This is a list.
+print(type(best_food_chains))
+
+# Import the json library
+import json
+
+# Use json.dumps to convert best_food_chains to a string.
+best_food_chains_string = json.dumps(best_food_chains)
+
+# We've successfully converted our list to a string.
+print("Used json.dumps on list best_food_chains...")
+print(type(best_food_chains_string))
+
+# Convert best_food_chains_string back into a list.
+print("Used json.loads on best_food_chains_string...")
+print(type(json.loads(best_food_chains_string)))
+
+# Make a dictionary.
+fast_food_franchise = {
+        "Subway": 24722,
+        "McDonalds": 14098,
+        "Starbucks": 10821,
+        "PizzaHut": 7600
+}
+
+# We can also dump a dictionary to a string and load it.
+print("Dumping back to the string format...")
+fast_food_franchise_string = json.dumps(fast_food_franchise)
+print(type(fast_food_franchise_string))
+
+
+print("\nEncoding string best_food_chains_string into a bytes using best_food_chains_string.encode('utf-8')")
+print(best_food_chains_string.encode('utf-8'))
+print(type(best_food_chains_string.encode('utf-8')))
