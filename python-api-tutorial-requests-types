@@ -28,7 +28,7 @@ print(response.content.decode("utf-8"))
 
 
 # Make the same request we did earlier, but with the coordinates of Savannah, GA
-print("\nTrying Mom's Ellenton coordinates...")
+print("\nTrying Savannah coordinates...")
 parameters = {"lat": 32.080608, "lon": -81.090103}
 response = requests.get("http://api.open-notify.org/iss-pass.json", params=parameters)
 
