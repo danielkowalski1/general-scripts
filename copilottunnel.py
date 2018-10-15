@@ -1,5 +1,9 @@
 #!/usr/bin/python
 
+#
+# STORE THIS IN /.ssh/authorized_keys :
+# command="netstat -an | grep 0.0.0.0:9003",no-pty ssh-rsa xXxXxXxXxX<PUBLIC-KEY-GOES-HERE> Dan-Comment-Here
+#
 #from subprocess import Popen, check_output
 #from sys import argv
 import traceback, sys, subprocess, os
