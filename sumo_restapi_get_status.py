@@ -57,8 +57,10 @@ def main():
         job_id = get_job_from_file('./job.id')
 
         print("Getting job status...")
+        # Return 'stat code' from file
         stat_code = get_job_status(job_id)
-
+        
+        # Stat code response depending if search is in process, has stopped, or failed
         while stat_code != 2:
                 if stat_code == 1:
                         print("Finished search job {}".format(job_id))
