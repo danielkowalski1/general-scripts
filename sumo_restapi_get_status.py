@@ -1,14 +1,21 @@
 #!/usr/bin/python3
+##########################################
+# Written by: DK
+# Date: 10/27/2018
+# Purpose: Python 3 script to get status of Sumo Logic search job using Requests module.
+
+# Documentation: https://help.sumologic.com/APIs/Search-Job-API/About-the-Search-Job-API
+#
+# Sample return object:
+# API returns the following json on success
+#   {'state': 'GATHERING RESULTS', 'histogramBuckets': [{'startTimestamp': 1540357200000, 'length': 54000000, 'count': 375755}], 'messageCount': 375755, 'recordCount': 0, 'pendingWarnings': [], 'pendingErrors': []}
+#   https://api.us2.sumologic.com/api/v1/search/jobs
+##########################################
 import requests
 from requests.auth import HTTPBasicAuth
 import datetime
 import time
 import pathlib
-
-"""
-SAMPLE GET RESPONSE
-{'state': 'GATHERING RESULTS', 'histogramBuckets': [{'startTimestamp': 1540357200000, 'length': 54000000, 'count': 375755}], 'messageCount': 375755, 'recordCount': 0, 'pendingWarnings': [], 'pendingErrors': []}
-"""
 
 ACCESS_ID = 'xxxxxxx'
 ACCESS_KEY = 'xxxxxxxxxxxxxxxxxxxxx'
