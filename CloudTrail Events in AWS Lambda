@@ -73,3 +73,42 @@ def handler(event, context):
 
     else:
         print("Records key not found")
+
+
+
+'''
+#
+#   IAM Role / Policy
+#
+#   
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:*"
+            ],
+            "Resource": "arn:aws:logs:*:*:*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": "arn:aws:s3:::dantest-commandline/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "sns:Publish"
+            ],
+            "Resource": "arn:aws:sns:us-west-2:XxXxXxXxXxXxX:Dan-CloudtrailToSNS-Email"
+        }
+    ]
+}
+#
+#
+#
+#
+'''
