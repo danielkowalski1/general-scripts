@@ -1,0 +1,75 @@
+########################################
+# Written by: Daniel
+# Created: 12/20/18
+# Python 3.x
+# Purpose: Converts Cloudtrail logs from S3 into a Python dictionary
+#            that can be iterated through and searched.
+#            Publish event notification to SNS topic
+########################################
+
+import boto3
+import gzip
+import json
+
+SNS_TOPIC = "<SNS TOPIC ARN>"
+SNS_SUBJECT = "<SUBJECT>"
+
+
+s3_client = boto3.client('s3')
+sns_client = boto3.client('sns')
+
+
+def handler(event, context):
+    for record in event['Records']:
+        bucket = record['s3']['bucket']['name']
+        key = record['s3']['object']['key']
+
+    
+    # Fetch logs from S3
+    s3_object = s3_client.get_object(
+        Bucket=bucket,
+        Key=key,
+    )
+
+    # Extract file and metadata from gzipped S3 object
+    with gzip.open(s3_object['Body'], 'rb') as binaryObj:
+        binaryContent = binaryObj.read()
+    
+    # Convert from binary data to text
+    raw_logs = binaryContent.decode()
+    
+    # Change text into a dictionary
+    dict_logs = json.loads(raw_logs)
+    
+
+    # Make sure json_logs key 'Records' exists
+    if 'Records' in dict_logs.keys():
+    
+        print("Printing Dictionary Content: {} \n\n".format(dict_logs))
+        
+        # Print Key-Value pair for each item found
+        for key, value in dict_logs['Records'][0].items():
+            # Account for values that are also dictionaries
+            if isinstance(value, dict):
+                print("Parent Key: {}".format(key))
+                for k, v in value.items():
+                    print("Subdict Key: {}".format(k))
+                    print("Subdict Value: {}".format(v))
+                continue
+            else:
+                print("Key: {}".format(key))
+                print("Value: {}".format(value))
+
+        
+        alert_message = "The following log was found: <extracted log contents here>"
+        
+        # Publish message to SNS topic
+        sns_response = sns_client.publish(
+            TopicArn=SNS_TOPIC,
+            Message=alert_message,
+            Subject=SNS_SUBJECT,
+            MessageStructure='string',
+        )
+
+    else:
+        print("Records key not found")
