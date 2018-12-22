@@ -2,18 +2,22 @@
 # Written by: Daniel
 # Created: 12/20/18
 # Python 3.x
-# Purpose: Converts Cloudtrail logs from S3 into a Python dictionary
-#            that can be iterated through and searched.
-#            Publish event notification to SNS topic
+# Purpose: Alerts of any CloudWatch logs being deleted.
+#           CloudTrail logs sent to S3 in JSON format
+#           Convert to Python dictionary for parsing and triage
 ########################################
 
 import boto3
 import gzip
 import json
+import os
 
-SNS_TOPIC = "<SNS TOPIC ARN>"
-SNS_SUBJECT = "<SUBJECT>"
-
+SNS_TOPIC = os.environ['SNS_TOPIC']
+SNS_SUBJECT = 'CloudWatch Logs Deleted'
+EVENT_SOURCE = 'logs.amazonaws.com'
+EVENT_NAME = 'DeleteLogStream'
+src_ip = ''
+src_user = ''
 
 s3_client = boto3.client('s3')
 sns_client = boto3.client('sns')
@@ -42,73 +46,39 @@ def handler(event, context):
     dict_logs = json.loads(raw_logs)
     
 
-    # Make sure json_logs key 'Records' exists
+    # Make sure 'Records'key exists
     if 'Records' in dict_logs.keys():
-    
-        print("Printing Dictionary Content: {} \n\n".format(dict_logs))
+        for item in dict_logs['Records']:
+            # Debugging commented out
+            #for key, value in item.items():
+            #    if isinstance(value, dict):
+            #        print("Parent Key: {}".format(key))
+            #        for k, v in value.items():
+            #            print("Subdict Key: {}".format(k))
+            #            print("Subdict Value: {}".format(v))
+            #            continue
+            #    else:
+            #        print("Key: {}".format(key))
+            #        print("Value: {}".format(value))
+                
+                
+                
+            if ('eventSource' in item):
+                if (item['eventSource'] == EVENT_SOURCE):
+                    if (item['eventName'] == EVENT_NAME):
+                        if item['sourceIPAddress']:
+                            src_ip = item['sourceIPAddress']
+                        if item['userIdentity']['arn']:
+                            src_user = item['userIdentity']['arn']
+                        
+                        alert_message = "Event: Logs were deleted from CloudWatch\nUser: " + src_user + "\nSource IP Address: " + src_ip
         
-        # Print Key-Value pair for each item found
-        for key, value in dict_logs['Records'][0].items():
-            # Account for values that are also dictionaries
-            if isinstance(value, dict):
-                print("Parent Key: {}".format(key))
-                for k, v in value.items():
-                    print("Subdict Key: {}".format(k))
-                    print("Subdict Value: {}".format(v))
-                continue
-            else:
-                print("Key: {}".format(key))
-                print("Value: {}".format(value))
-
-        
-        alert_message = "The following log was found: <extracted log contents here>"
-        
-        # Publish message to SNS topic
-        sns_response = sns_client.publish(
-            TopicArn=SNS_TOPIC,
-            Message=alert_message,
-            Subject=SNS_SUBJECT,
-            MessageStructure='string',
-        )
-
+                        # Publish message to SNS topic
+                        sns_response = sns_client.publish(
+                            TopicArn=SNS_TOPIC,
+                            Message=alert_message,
+                            Subject=SNS_SUBJECT,
+                            MessageStructure='string',
+                        )
     else:
-        print("Records key not found")
-
-
-
-'''
-#
-#   IAM Role / Policy
-#
-#   
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "logs:*"
-            ],
-            "Resource": "arn:aws:logs:*:*:*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:GetObject"
-            ],
-            "Resource": "arn:aws:s3:::dantest-commandline/*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "sns:Publish"
-            ],
-            "Resource": "arn:aws:sns:us-west-2:XxXxXxXxXxXxX:Dan-CloudtrailToSNS-Email"
-        }
-    ]
-}
-#
-#
-#
-#
-'''
+        exit()
